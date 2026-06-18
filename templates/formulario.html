@@ -13,62 +13,56 @@
     *{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);
          color:var(--text);min-height:100vh;padding:2rem 1rem;}
-    h1{text-align:center;font-size:1.6rem;font-weight:700;margin-bottom:.3rem;}
-    .subtitle{text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:2rem;}
-    .wrapper{max-width:980px;margin:0 auto;display:grid;
-             grid-template-columns:1fr 1fr;gap:1.5rem;}
-    @media(max-width:680px){.wrapper{grid-template-columns:1fr;}}
+    h1{text-align:center;font-size:1.7rem;font-weight:700;margin-bottom:.3rem;}
+    .page{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:1.5rem;}
     .card{background:var(--card);border-radius:var(--radius);
           padding:1.5rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
-    .card h2{font-size:1rem;font-weight:600;margin-bottom:1.2rem;
-             display:flex;align-items:center;gap:.5rem;}
-    /* sección de métricas */
-    .section-label{font-size:.7rem;font-weight:700;text-transform:uppercase;
+    .card h2{font-size:1rem;font-weight:600;margin-bottom:1.2rem;}
+    .section-label{font-size:.68rem;font-weight:700;text-transform:uppercase;
                    letter-spacing:.08em;color:var(--muted);margin-bottom:.6rem;}
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
     .mbox{background:var(--bg);border-radius:8px;padding:1rem;text-align:center;}
     .mbox .lbl{font-size:.7rem;color:var(--muted);margin-bottom:.3rem;}
     .mbox .val{font-size:1.5rem;font-weight:700;color:var(--primary);}
-    .mbox.g .val{color:var(--accent);}
+    .mbox.verde .val{color:var(--accent);}
     .divider{border:none;border-top:1px solid var(--border);margin:1.2rem 0;}
-    /* form */
     .form-group{margin-bottom:.9rem;}
-    label{display:block;font-size:.8rem;font-weight:600;margin-bottom:.3rem;}
-    input[type=number],select{width:100%;padding:.55rem .85rem;
-      border:1px solid var(--border);border-radius:8px;font-size:.88rem;
+    label{display:block;font-size:.82rem;font-weight:600;margin-bottom:.3rem;}
+    input[type=number],select{width:100%;padding:.6rem .9rem;
+      border:1px solid var(--border);border-radius:8px;font-size:.9rem;
       color:var(--text);background:#fff;transition:border-color .2s;}
     input[type=number]:focus,select:focus{outline:none;border-color:var(--primary);}
     .hint{font-size:.7rem;color:var(--muted);margin-top:.2rem;}
-    button[type=submit]{width:100%;padding:.7rem;background:var(--primary);
-      color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:600;
-      cursor:pointer;transition:background .2s;margin-top:.4rem;}
+    button[type=submit]{width:100%;padding:.75rem;background:var(--primary);
+      color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;
+      cursor:pointer;transition:background .2s;margin-top:.5rem;}
     button[type=submit]:hover{background:var(--primary-h);}
-    #res{display:none;margin-top:1rem;padding:1rem;border-radius:8px;text-align:center;}
-    #res.ok{background:#d1fae5;border:1px solid #6ee7b7;}
-    #res.err{background:#fee2e2;border:1px solid #fca5a5;}
-    #res .rlbl{font-size:.75rem;color:var(--muted);}
-    #res .rval{font-size:2rem;font-weight:800;color:var(--accent);}
-    #res .rdsc{font-size:.8rem;margin-top:.25rem;}
+    #resultado{display:none;margin-top:1.2rem;padding:1.2rem;
+               border-radius:8px;text-align:center;}
+    #resultado.ok{background:#d1fae5;border:1px solid #6ee7b7;}
+    #resultado.err{background:#fee2e2;border:1px solid #fca5a5;}
+    #resultado .rlbl{font-size:.75rem;color:var(--muted);}
+    #resultado .rval{font-size:2.2rem;font-weight:800;color:var(--accent);}
+    #resultado .rdsc{font-size:.85rem;margin-top:.3rem;}
   </style>
 </head>
 <body>
 
 <h1>🎓 Predictor de Calificación en Matemáticas</h1>
-<p class="subtitle">Random Forest · Students Performance · RFE (4 features) · KFold = 7</p>
 
-<div class="wrapper">
+<div class="page">
 
-  <!-- ── Métricas ── -->
+  <!-- Métricas -->
   <div class="card">
-    <h2><span>📊</span> Métricas del Modelo</h2>
+    <h2>📊 Métricas del Modelo</h2>
 
-    <div class="section-label">Validación Cruzada — Promedio KFold (7 corridas)</div>
+    <div class="section-label">Validación Cruzada — (cv=7)</div>
     <div class="grid2">
       <div class="mbox">
         <div class="lbl">R² Promedio</div>
         <div class="val">{{ metricas.r2_promedio }}</div>
       </div>
-      <div class="mbox g">
+      <div class="mbox verde">
         <div class="lbl">MAE Promedio</div>
         <div class="val">{{ metricas.mae_promedio }}</div>
       </div>
@@ -76,55 +70,49 @@
 
     <hr class="divider"/>
 
-    <div class="section-label">Corrida Individual (80% entrenamiento / 20% prueba)</div>
+    <div class="section-label">Corrida Individual</div>
     <div class="grid2">
       <div class="mbox">
         <div class="lbl">R² Individual</div>
         <div class="val">{{ metricas.r2_individual }}</div>
       </div>
-      <div class="mbox g">
+      <div class="mbox verde">
         <div class="lbl">MAE Individual</div>
         <div class="val">{{ metricas.mae_individual }}</div>
       </div>
     </div>
   </div>
 
-  <!-- ── Formulario ── -->
+  <!-- Formulario -->
   <div class="card">
-    <h2><span>🔮</span> Predecir Calificación</h2>
-    <p style="font-size:.75rem;color:var(--muted);margin-bottom:1rem;">
-      Features seleccionadas por RFE: <strong>{{ features | join(', ') }}</strong>
-    </p>
+    <h2>Predecir Calificación</h2>
 
     <form id="predForm">
       {% for feat in features %}
-        <div class="form-group">
-          <label for="{{ feat | replace(' ','_') }}">
-            {{ feat | replace('score','calificación') | title }}
-          </label>
+      <div class="form-group">
+        <label>{{ feat | title }}</label>
 
-          {% if feat in numeric_fields %}
-            <input type="number" id="{{ feat | replace(' ','_') }}"
-                   name="{{ feat | replace(' ','_') }}"
-                   min="0" max="100" step="1"
-                   placeholder="Ej: 70" required/>
-            <span class="hint">Valor entre 0 y 100</span>
-          {% else %}
-            <select id="{{ feat | replace(' ','_') }}"
-                    name="{{ feat | replace(' ','_') }}" required>
-              <option value="" disabled selected>-- Selecciona --</option>
-              {% for opt in form_options[feat] %}
-                <option value="{{ opt }}">{{ opt }}</option>
-              {% endfor %}
-            </select>
-          {% endif %}
-        </div>
+        {% if feat in numeric_fields %}
+          <input type="number"
+                 name="{{ feat | replace(' ','_') | replace('/','_') }}"
+                 min="0" max="100" step="1"
+                 placeholder="Ej: 70" required/>
+          <span class="hint">Valor entre 0 y 100</span>
+        {% else %}
+          <select name="{{ feat | replace(' ','_') | replace('/','_') }}" required>
+            <option value="" disabled selected>-- Selecciona --</option>
+            {% for opt in form_options[feat] %}
+              <option value="{{ opt }}">{{ opt }}</option>
+            {% endfor %}
+          </select>
+        {% endif %}
+      </div>
       {% endfor %}
 
-      <button type="submit">Predecir calificación →</button>
+      <button type="submit">Predecir →</button>
     </form>
 
-    <div id="res">
+    <div id="resultado">
       <div class="rlbl">Calificación estimada en Matemáticas</div>
       <div class="rval" id="rval">—</div>
       <div class="rdsc" id="rdsc"></div>
@@ -134,29 +122,42 @@
 </div>
 
 <script>
-document.getElementById('predForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const res  = document.getElementById('res');
-  const rval = document.getElementById('rval');
-  const rdsc = document.getElementById('rdsc');
+  document.getElementById('predForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const res  = document.getElementById('resultado');
+    const rval = document.getElementById('rval');
+    const rdsc = document.getElementById('rdsc');
 
-  rval.textContent = '…'; res.style.display = 'block'; res.className = 'ok'; rdsc.textContent = '';
+    rval.textContent = '…';
+    res.style.display = 'block';
+    res.className = 'ok';
+    rdsc.textContent = '';
 
-  try {
-    const r = await fetch('/predict', {method:'POST', body: new FormData(e.target)});
-    const d = await r.json();
-    if (d.error) {
-      res.className = 'err'; rval.textContent = 'Error'; rdsc.textContent = d.error;
-    } else {
-      const s = d.math_score;
-      rval.textContent = s + ' / 100';
-      rdsc.textContent = s >= 90 ? '🌟 Excelente' : s >= 70 ? '✅ Buen desempeño'
-                       : s >= 50 ? '⚠️ Regular' : '❌ Necesita refuerzo';
+    try {
+      const response = await fetch('/predict', {
+        method: 'POST',
+        body: new FormData(e.target)
+      });
+      const data = await response.json();
+
+      if (data.error) {
+        res.className = 'err';
+        rval.textContent = 'Error';
+        rdsc.textContent = data.error;
+      } else {
+        const score = data.math_score;
+        rval.textContent = score + ' / 100';
+        if      (score >= 90) rdsc.textContent = '🌟 Excelente';
+        else if (score >= 70) rdsc.textContent = '✅ Buen desempeño';
+        else if (score >= 50) rdsc.textContent = '⚠️ Desempeño regular';
+        else                  rdsc.textContent = '❌ Necesita refuerzo';
+      }
+    } catch(err) {
+      res.className = 'err';
+      rval.textContent = 'Error';
+      rdsc.textContent = 'No se pudo conectar con el servidor.';
     }
-  } catch(err) {
-    res.className = 'err'; rval.textContent = 'Error'; rdsc.textContent = 'Sin conexión.';
-  }
-});
+  });
 </script>
 </body>
 </html>
